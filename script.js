@@ -131,6 +131,34 @@ function getFaviconUrl(value) {
   return `https://www.google.com/s2/favicons?domain_url=${encodeURIComponent(value)}&sz=128`;
 }
 
+function getYouTubeVideoId(value) {
+  try {
+    const url = new URL(value);
+
+    if (url.hostname.includes("youtu.be")) {
+      return url.pathname.split("/").filter(Boolean)[0] ?? "";
+    }
+
+    if (url.hostname.includes("youtube.com")) {
+      return url.searchParams.get("v") ?? url.pathname.split("/").pop() ?? "";
+    }
+  } catch {
+    return "";
+  }
+
+  return "";
+}
+
+function getPreviewImageUrl(value) {
+  const youtubeId = getYouTubeVideoId(value);
+
+  if (youtubeId) {
+    return `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`;
+  }
+
+  return `https://api.microlink.io/?url=${encodeURIComponent(value)}&screenshot=true&embed=screenshot.url`;
+}
+
 function render() {
   const category = categories[activeCategory];
   const currentIdeas = ideas[activeCategory] ?? [];
@@ -157,7 +185,7 @@ function render() {
     const check = item.querySelector(".check");
     const deleteButton = item.querySelector(".delete");
     const ideaLink = item.querySelector(".idea-link");
-    const previewIcon = item.querySelector(".preview-icon");
+    const previewImage = item.querySelector(".preview-image");
     const ideaDescription = item.querySelector(".idea-description");
     const ideaDomain = item.querySelector(".idea-domain");
     const domain = getDomain(idea.link);
@@ -166,7 +194,15 @@ function render() {
     ideaLink.href = idea.link;
     ideaDescription.textContent = idea.description;
     ideaDomain.textContent = domain;
-    previewIcon.src = getFaviconUrl(idea.link);
+    previewImage.src = getPreviewImageUrl(idea.link);
+    previewImage.addEventListener(
+      "error",
+      () => {
+        previewImage.classList.add("fallback-icon");
+        previewImage.src = getFaviconUrl(idea.link);
+      },
+      { once: true },
+    );
     check.setAttribute("aria-pressed", String(idea.done));
 
     check.addEventListener("click", async () => {
