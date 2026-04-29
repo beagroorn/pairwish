@@ -119,46 +119,6 @@ function normalizeUrl(value) {
   return `https://${trimmed}`;
 }
 
-function getDomain(value) {
-  try {
-    return new URL(value).hostname.replace(/^www\./, "");
-  } catch {
-    return "посилання";
-  }
-}
-
-function getFaviconUrl(value) {
-  return `https://www.google.com/s2/favicons?domain_url=${encodeURIComponent(value)}&sz=128`;
-}
-
-function getYouTubeVideoId(value) {
-  try {
-    const url = new URL(value);
-
-    if (url.hostname.includes("youtu.be")) {
-      return url.pathname.split("/").filter(Boolean)[0] ?? "";
-    }
-
-    if (url.hostname.includes("youtube.com")) {
-      return url.searchParams.get("v") ?? url.pathname.split("/").pop() ?? "";
-    }
-  } catch {
-    return "";
-  }
-
-  return "";
-}
-
-function getPreviewImageUrl(value) {
-  const youtubeId = getYouTubeVideoId(value);
-
-  if (youtubeId) {
-    return `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`;
-  }
-
-  return `https://api.microlink.io/?url=${encodeURIComponent(value)}&screenshot=true&embed=screenshot.url`;
-}
-
 function render() {
   const category = categories[activeCategory];
   const currentIdeas = ideas[activeCategory] ?? [];
@@ -185,24 +145,10 @@ function render() {
     const check = item.querySelector(".check");
     const deleteButton = item.querySelector(".delete");
     const ideaLink = item.querySelector(".idea-link");
-    const previewImage = item.querySelector(".preview-image");
-    const ideaDescription = item.querySelector(".idea-description");
-    const ideaDomain = item.querySelector(".idea-domain");
-    const domain = getDomain(idea.link);
 
     item.classList.toggle("done", idea.done);
+    ideaLink.textContent = idea.description;
     ideaLink.href = idea.link;
-    ideaDescription.textContent = idea.description;
-    ideaDomain.textContent = domain;
-    previewImage.src = getPreviewImageUrl(idea.link);
-    previewImage.addEventListener(
-      "error",
-      () => {
-        previewImage.classList.add("fallback-icon");
-        previewImage.src = getFaviconUrl(idea.link);
-      },
-      { once: true },
-    );
     check.setAttribute("aria-pressed", String(idea.done));
 
     check.addEventListener("click", async () => {
