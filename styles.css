@@ -52,7 +52,7 @@ button {
   color: #fff;
   background:
     linear-gradient(110deg, rgba(39, 33, 28, 0.88), rgba(39, 33, 28, 0.35)),
-    url("https://images.unsplash.com/photo-1516585427167-9f4af9627e6c?auto=format&fit=crop&w=1600&q=80") center/cover;
+    url("assets/hero.jpg") center/cover;
   box-shadow: var(--shadow);
 }
 

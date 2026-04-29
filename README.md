@@ -17,6 +17,7 @@
 - `styles.css` - адаптивний дизайн
 - `script.js` - логіка вкладок і роботи з Firebase
 - `firebase-config.js` - Firebase config, який треба заповнити
+- `assets/hero.jpg` - головне фото у верхній частині сайту
 
 ## Налаштування Firebase
 
@@ -60,4 +61,14 @@ service cloud.firestore {
 
 ```text
 https://ваш-нік.github.io/назва-репозиторію/
+```
+
+## Заміна головного фото
+
+Покладіть потрібне фото в папку `assets` і назвіть файл `hero.jpg`.
+
+Якщо фото має іншу назву або формат, змініть рядок у `styles.css`:
+
+```css
+url("assets/hero.jpg") center/cover;
 ```
