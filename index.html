@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Наші бажання</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Для двох</p>
+          <h1>Наші бажання</h1>
+          <p class="subtitle">Побачення, смаки, челенджі та історії, які хочеться прожити разом.</p>
+        </div>
+        <div class="stats" aria-label="Статистика списку">
+          <span id="totalCount">0 ідей</span>
+          <strong id="doneCount">0 виконано</strong>
+        </div>
+      </header>
+
+      <section class="workspace" aria-label="Список бажань">
+        <nav class="tabs" aria-label="Категорії">
+          <button class="tab active" type="button" data-tab="dates">Побачення</button>
+          <button class="tab" type="button" data-tab="food">Експерименти з їжею</button>
+          <button class="tab" type="button" data-tab="challenges">Челенджи</button>
+          <button class="tab" type="button" data-tab="movies">Фільми/серіали</button>
+        </nav>
+
+        <div class="list-head">
+          <div>
+            <p class="section-label" id="activeSubtitle">Ідеї для наступних зустрічей</p>
+            <h2 id="activeTitle">Побачення</h2>
+          </div>
+          <button class="add-button" type="button" id="openForm" aria-label="Додати новий пункт">
+            <span aria-hidden="true">+</span>
+            Додати
+          </button>
+        </div>
+
+        <form class="idea-form hidden" id="ideaForm">
+          <label>
+            Опис
+            <textarea id="description" rows="3" placeholder="Наприклад: вечірній пікнік біля води" required></textarea>
+          </label>
+          <label>
+            Посилання
+            <input id="link" type="text" inputmode="url" placeholder="https://..." required />
+          </label>
+          <div class="form-actions">
+            <button class="ghost-button" type="button" id="cancelForm">Скасувати</button>
+            <button class="save-button" type="submit">Зберегти</button>
+          </div>
+        </form>
+
+        <p class="status-message" id="statusMessage">Підключення до спільного списку...</p>
+        <div class="ideas" id="ideasList" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <template id="ideaTemplate">
+      <article class="idea">
+        <button class="check" type="button" aria-label="Позначити як виконано"></button>
+        <a class="idea-link" target="_blank" rel="noopener noreferrer"></a>
+        <button class="delete" type="button" aria-label="Видалити пункт">×</button>
+      </article>
+    </template>
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
