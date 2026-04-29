@@ -52,7 +52,7 @@ button {
   color: #fff;
   background:
     linear-gradient(110deg, rgba(39, 33, 28, 0.88), rgba(39, 33, 28, 0.35)),
-    url("assets/hero.jpg") center/cover;
+    url("hero.jpg") center/cover;
   box-shadow: var(--shadow);
 }
 
