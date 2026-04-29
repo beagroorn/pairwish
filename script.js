@@ -119,13 +119,32 @@ function normalizeUrl(value) {
   return `https://${trimmed}`;
 }
 
-function getReadableUrl(value) {
+function getLinkSource(value) {
   try {
     const url = new URL(value);
-    const host = url.hostname.replace(/^www\./, "");
-    const path = url.pathname === "/" ? "" : url.pathname;
+    const host = url.hostname.replace(/^www\./, "").toLowerCase();
+    const knownSources = [
+      ["instagram.com", "Instagram"],
+      ["youtube.com", "YouTube"],
+      ["youtu.be", "YouTube"],
+      ["google.com", "Google"],
+      ["maps.google.", "Google Maps"],
+      ["tiktok.com", "TikTok"],
+      ["netflix.com", "Netflix"],
+      ["megogo.net", "Megogo"],
+      ["sweet.tv", "Sweet TV"],
+      ["spotify.com", "Spotify"],
+      ["apple.com", "Apple"],
+      ["booking.com", "Booking"],
+      ["airbnb.", "Airbnb"],
+    ];
+    const match = knownSources.find(([domain]) => host.includes(domain));
 
-    return `${host}${path}`.replace(/\/$/, "");
+    if (match) {
+      return match[1];
+    }
+
+    return host.split(".")[0].replace(/^\w/, (letter) => letter.toUpperCase());
   } catch {
     return value;
   }
@@ -163,7 +182,7 @@ function render() {
     item.classList.toggle("done", idea.done);
     ideaLink.href = idea.link;
     ideaDescription.textContent = idea.description;
-    ideaUrl.textContent = getReadableUrl(idea.link);
+    ideaUrl.textContent = getLinkSource(idea.link);
     check.setAttribute("aria-pressed", String(idea.done));
 
     check.addEventListener("click", async () => {
