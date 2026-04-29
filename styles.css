@@ -329,6 +329,8 @@ input:focus {
 }
 
 .idea-link {
+  display: grid;
+  gap: 4px;
   min-width: 0;
   color: var(--ink);
   font-weight: 700;
@@ -343,6 +345,22 @@ input:focus {
 
 .idea.done .idea-link {
   color: var(--muted);
+}
+
+.idea-description {
+  overflow-wrap: anywhere;
+}
+
+.idea-url {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.idea.done .idea-description {
   text-decoration: line-through;
 }
 

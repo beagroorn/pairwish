@@ -119,6 +119,18 @@ function normalizeUrl(value) {
   return `https://${trimmed}`;
 }
 
+function getReadableUrl(value) {
+  try {
+    const url = new URL(value);
+    const host = url.hostname.replace(/^www\./, "");
+    const path = url.pathname === "/" ? "" : url.pathname;
+
+    return `${host}${path}`.replace(/\/$/, "");
+  } catch {
+    return value;
+  }
+}
+
 function render() {
   const category = categories[activeCategory];
   const currentIdeas = ideas[activeCategory] ?? [];
@@ -145,10 +157,13 @@ function render() {
     const check = item.querySelector(".check");
     const deleteButton = item.querySelector(".delete");
     const ideaLink = item.querySelector(".idea-link");
+    const ideaDescription = item.querySelector(".idea-description");
+    const ideaUrl = item.querySelector(".idea-url");
 
     item.classList.toggle("done", idea.done);
-    ideaLink.textContent = idea.description;
     ideaLink.href = idea.link;
+    ideaDescription.textContent = idea.description;
+    ideaUrl.textContent = getReadableUrl(idea.link);
     check.setAttribute("aria-pressed", String(idea.done));
 
     check.addEventListener("click", async () => {
