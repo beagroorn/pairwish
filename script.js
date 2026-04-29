@@ -119,6 +119,18 @@ function normalizeUrl(value) {
   return `https://${trimmed}`;
 }
 
+function getDomain(value) {
+  try {
+    return new URL(value).hostname.replace(/^www\./, "");
+  } catch {
+    return "посилання";
+  }
+}
+
+function getFaviconUrl(value) {
+  return `https://www.google.com/s2/favicons?domain_url=${encodeURIComponent(value)}&sz=128`;
+}
+
 function render() {
   const category = categories[activeCategory];
   const currentIdeas = ideas[activeCategory] ?? [];
@@ -145,10 +157,16 @@ function render() {
     const check = item.querySelector(".check");
     const deleteButton = item.querySelector(".delete");
     const ideaLink = item.querySelector(".idea-link");
+    const previewIcon = item.querySelector(".preview-icon");
+    const ideaDescription = item.querySelector(".idea-description");
+    const ideaDomain = item.querySelector(".idea-domain");
+    const domain = getDomain(idea.link);
 
     item.classList.toggle("done", idea.done);
-    ideaLink.textContent = idea.description;
     ideaLink.href = idea.link;
+    ideaDescription.textContent = idea.description;
+    ideaDomain.textContent = domain;
+    previewIcon.src = getFaviconUrl(idea.link);
     check.setAttribute("aria-pressed", String(idea.done));
 
     check.addEventListener("click", async () => {

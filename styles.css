@@ -286,10 +286,10 @@ input:focus {
 
 .idea {
   display: grid;
-  grid-template-columns: 42px 1fr 42px;
+  grid-template-columns: 42px minmax(0, 1fr) 42px;
   gap: 12px;
   align-items: center;
-  min-height: 74px;
+  min-height: 86px;
   padding: 12px;
   border: 1px solid var(--line);
   border-radius: 18px;
@@ -329,6 +329,11 @@ input:focus {
 }
 
 .idea-link {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  min-width: 0;
   color: var(--ink);
   font-weight: 700;
   line-height: 1.35;
@@ -342,6 +347,44 @@ input:focus {
 
 .idea.done .idea-link {
   color: var(--muted);
+}
+
+.preview {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #f8f1e8;
+}
+
+.preview-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+}
+
+.idea-text {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.idea-description {
+  overflow-wrap: anywhere;
+}
+
+.idea-domain {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.idea.done .idea-description {
   text-decoration: line-through;
 }
 
@@ -439,9 +482,25 @@ input:focus {
   }
 
   .idea {
-    grid-template-columns: 40px 1fr 40px;
+    grid-template-columns: 40px minmax(0, 1fr) 40px;
     gap: 9px;
     padding: 10px;
+  }
+
+  .idea-link {
+    grid-template-columns: 46px minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .preview {
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+  }
+
+  .preview-icon {
+    width: 25px;
+    height: 25px;
   }
 }
 
